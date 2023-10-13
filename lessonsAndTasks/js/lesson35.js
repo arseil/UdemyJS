@@ -93,3 +93,4 @@ const q = {
 };
 
 const newObj = {...q};
+console.log(newObj)
