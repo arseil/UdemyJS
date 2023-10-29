@@ -1,0 +1,14 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+button {
+    display: block;
+    width: 200px;
+    height: 150px;
+    margin: 40px auto;
+    padding: 50px;
+    border: 2px solid black;
+}
