@@ -1,8 +1,9 @@
+/* eslint-disable indent */
 window.addEventListener('DOMContentLoaded', () => {
 	// Tabs
 	const tabs = document.querySelectorAll('.tabheader__item'),
-		  tabsContent = document.querySelectorAll('.tabcontent'),
-		  tabsParent = document.querySelector('.tabheader__items');
+		tabsContent = document.querySelectorAll('.tabcontent'),
+		tabsParent = document.querySelector('.tabheader__items');
 
 	function hideTabContent() {
 		tabsContent.forEach(item => {
@@ -14,7 +15,7 @@ window.addEventListener('DOMContentLoaded', () => {
 			item.classList.remove('tabheader__item_active');
 		});
 	}
-	
+
 	function showTabContent(i = 0) {
 		tabsContent[i].classList.add('show', 'fade');
 		tabsContent[i].classList.remove('hide');
@@ -54,9 +55,9 @@ window.addEventListener('DOMContentLoaded', () => {
 			seconds = 0;
 		} else {
 			days = Math.floor(t / (1000 * 60 * 60 * 24)),
-			hours = Math.floor((t / (1000 * 60 * 60)) % 24),
-			minutes = Math.floor((t / (1000 * 60)) % 60),
-			seconds = Math.floor((t / 1000) % 60);
+				hours = Math.floor((t / (1000 * 60 * 60)) % 24),
+				minutes = Math.floor((t / (1000 * 60)) % 60),
+				seconds = Math.floor((t / 1000) % 60);
 		}
 
 		return {
@@ -78,14 +79,14 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	function setClock(selector, endtime) {
 		const timer = document.querySelector(selector),
-			  days = timer.querySelector('#days'),
-			  hours = timer.querySelector('#hours'),
-			  minutes = timer.querySelector('#minutes'),
-			  seconds = timer.querySelector('#seconds'),
-			  timeInterval = setInterval(updateClock, 1000);
+			days = timer.querySelector('#days'),
+			hours = timer.querySelector('#hours'),
+			minutes = timer.querySelector('#minutes'),
+			seconds = timer.querySelector('#seconds'),
+			timeInterval = setInterval(updateClock, 1000);
 
 		updateClock();
-		
+
 		function updateClock() {
 			const t = getTimeRemaining(endtime);
 
@@ -105,13 +106,13 @@ window.addEventListener('DOMContentLoaded', () => {
 	// Modal
 
 	const modal = document.querySelector('.modal'),
-		  modalTrigger = document.querySelectorAll('[data-modal]');
-		//   modalCloseBtn = document.querySelector('[data-close]');
-		
+		modalTrigger = document.querySelectorAll('[data-modal]');
+	//   modalCloseBtn = document.querySelector('[data-close]');
+
 	modalTrigger.forEach(item => {
 		item.addEventListener('click', openModal);
 	});
-	
+
 	function closeModal() {
 		modal.classList.add('hide');
 		modal.classList.remove('show');
@@ -126,7 +127,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	}
 
 
-	
+
 	// modalCloseBtn.addEventListener('click', closeModal);
 
 	modal.addEventListener('click', (event) => {
@@ -136,7 +137,7 @@ window.addEventListener('DOMContentLoaded', () => {
 	});
 
 	document.addEventListener('keydown', (event) => {
-		if (event.code === 'Escape' && !modal.classList.contains('hide')) { 
+		if (event.code === 'Escape' && !modal.classList.contains('hide')) {
 			closeModal();
 		}
 	});
@@ -259,38 +260,58 @@ window.addEventListener('DOMContentLoaded', () => {
 			// form.append(statusMessage);
 			form.insertAdjacentElement('afterend', statusMessage);
 
-			const request = new XMLHttpRequest();
-			request.open('POST', 'server.php');
+			// const request = new XMLHttpRequest();
+			// request.open('POST', 'server.php');
 			// request.setRequestHeader('Content-type', 'multipart/form-data'); // заголовок устанав. автоматич. при XMLHttpRequest + FormData
-			
+
 			// если все же нужно работать с json
-			request.setRequestHeader('Content-type', 'application/json'); 
+			// request.setRequestHeader('Content-type', 'application/json');
 
 			const formData = new FormData(form);
 
 			const object = {};
-			formData.forEach(function(value, key) {
+			formData.forEach(function (value, key) {
 				object[key] = value;
 			});
 
-			const json = JSON.stringify(object);
+			// const json = JSON.stringify(object);
 
 			// request.send(formData);
-			request.send(json);
+			// request.send(json);
 
-			request.addEventListener('load', () => {
-				if (request.status === 200) {
-					console.log(request.response);
+
+			// Переделываем с помощью Fetch API
+			fetch('server.php', {
+				method: 'POST',
+				headers: {
+					'Content-type': 'application/json'
+				},
+				body: JSON.stringify(object)
+			})
+				.then(data => data.text())
+				.then(data => {
+					console.log(data);
 					showThanksModal(message.soccess);
-					form.reset();
 					statusMessage.remove();
-					// setTimeout(() => {
-					// 	statusMessage.remove();
-					// }, 2000);
-				} else {
+				}).catch(() => {
 					showThanksModal(message.failure);
-				}
-			});
+				}).finally(() => {
+					form.reset();
+				});
+
+			// request.addEventListener('load', () => {
+			// 	if (request.status === 200) {
+			// 		console.log(request.response);
+			// 		showThanksModal(message.soccess);
+			// 		form.reset();
+			// 		statusMessage.remove();
+			// 		// setTimeout(() => {
+			// 		// 	statusMessage.remove();
+			// 		// }, 2000);
+			// 	} else {
+			// 		showThanksModal(message.failure);
+			// 	}
+			// });
 		});
 	}
 
@@ -311,7 +332,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		`;
 
 		document.querySelector('.modal').append(thanksModal);
-		
+
 		setTimeout(() => {
 			thanksModal.remove();
 			prevModalDialog.classList.add('show');
@@ -319,4 +340,8 @@ window.addEventListener('DOMContentLoaded', () => {
 			closeModal();
 		}, 4000);
 	}
+
+	fetch('http://localhost:3000/menu')
+		.then(data => data.json())
+		.then(res => console.log(res));
 });
