@@ -59,18 +59,46 @@ import './App.css';
 // export default App;
 
 // lesson127
-import WhoAmI from './127. Props/lesson127';
+// import WhoAmI from './127. Props/lesson127';
+
+// function App() {
+// 	return (
+// 		<div className="App">
+// 			{/* <WhoAmI name='John' surname='Smith' link='facebook.com' /> */}
+// 			{/* <WhoAmI name='Alex' surname='Shepard' link='vk.com' /> */}
+// 			{/* <WhoAmI name={{ firstName: 'John' }} surname='Smith' link='facebook.com' /> */}
+// 			{/* <WhoAmI name={{ firstName: 'Alex' }} surname='Shepard' link='vk.com' /> */}
+// 			<WhoAmI name={() => { return 'John' }} surname='Smith' link='facebook.com' />
+// 			<WhoAmI name={() => { return 'Alex' }} surname='Shepard' link='vk.com' />
+
+// 		</div>
+// 	);
+// }
+
+// export default App;
+
+// lesson130
+// import WhoAmI from './130. State useState/lesson130'
+
+// function App() {
+// 	return (
+// 		<div className="App">
+// 			<WhoAmI name='John' surname='Smith' link='facebook.com' />
+// 			<WhoAmI name='Alex' surname='Shepard' link='vk.com' />
+// 		</div>
+// 	);
+// }
+
+// export default App;
+
+// lesson132
+import WhoAmI from './132. Events in React/lesson132'
 
 function App() {
 	return (
 		<div className="App">
-			{/* <WhoAmI name='John' surname='Smith' link='facebook.com' /> */}
-			{/* <WhoAmI name='Alex' surname='Shepard' link='vk.com' /> */}
-			{/* <WhoAmI name={{ firstName: 'John' }} surname='Smith' link='facebook.com' /> */}
-			{/* <WhoAmI name={{ firstName: 'Alex' }} surname='Shepard' link='vk.com' /> */}
-			<WhoAmI name={() => { return 'John' }} surname='Smith' link='facebook.com' />
-			<WhoAmI name={() => { return 'Alex' }} surname='Shepard' link='vk.com' />
-
+			<WhoAmI name='John' surname='Smith' link='facebook.com' />
+			<WhoAmI name='Alex' surname='Shepard' link='vk.com' />
 		</div>
 	);
 }

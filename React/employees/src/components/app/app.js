@@ -1,3 +1,5 @@
+import { Component } from 'react';
+
 import AppInfo from '../app-info/app-info';
 import SearchPanel from '../search-panel/search-panel';
 import AppFilter from '../app-filter/app-filter';
@@ -6,20 +8,122 @@ import EmployeesAddForm from '../employees-add-form/employees-add-form';
 
 import './app.css';
 
-function App() {
-    return (
-        <div className="app">
-            <AppInfo />
+class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: [
+                { name: 'John C.', salary: 800, increase: false, rise: true, id: 1 },
+                { name: 'Alex M.', salary: 3000, increase: true, rise: false, id: 2 },
+                { name: 'Carl W.', salary: 5000, increase: false, rise: false, id: 3 }
+            ]
+        }
+    }
 
-            <div className="search-panel">
-                <SearchPanel />
-                <AppFilter />
+    deleteItem = (id) => {
+        this.setState(({ data }) => {
+            // const index = data.findIndex(elem => elem.id === id)
+
+            // const before = data.slice(0, index);
+            // const after = data.slice(index + 1);
+
+            // const newArr = [...before, ...after]
+
+            // нарушает иммутабельность обьекта, нельзя менять обьект напрямую
+            // data.splice(index, 1);
+
+            return {
+                data: data.filter(item => item.id !== id)
+            }
+        })
+    }
+
+    addItem = (name, salary) => {
+        const newElem = {
+            name,
+            salary,
+            increase: false,
+            rise: false,
+            id: this.state.data.length + 1
+        }
+        this.setState(({ data }) => {
+            const newArr = [...data, newElem];
+            return {
+                data: newArr
+            }
+        });
+    }
+
+    onToggleProp = (id, prop) => {
+        this.setState(({ data }) => ({
+            data: data.map(item => {
+                if (item.id === id) {
+                    return { ...item, [prop]: !item[prop] }
+                }
+                return item;
+            })
+        }))
+    }
+
+    // onToggleIncrease = (id) => {
+    //     // this.setState(({ data }) => {
+    //     //     const index = data.findIndex(elem => elem.id === id);
+    //     //     const old = data[index];
+    //     //     const newItem = { ...old, increase: !old.increase };
+    //     //     const newArr = [...data.slice(0, index), newItem, ...data.slice(index + 1)];
+
+    //     //     return {
+    //     //         data: newArr
+    //     //     }
+    //     // })
+
+    //     this.setState(({ data }) => ({
+    //         data: data.map(item => {
+    //             if (item.id === id) {
+    //                 return { ...item, increase: !item.increase }
+    //             }
+    //             return item;
+    //         })
+    //     }))
+    // }
+
+    // onToggleRise = (id) => {
+    //     this.setState(({ data }) => ({
+    //         data: data.map(item => {
+    //             if (item.id === id) {
+    //                 return { ...item, rise: !item.rise }
+    //             }
+    //             return item;
+    //         })
+    //     }))
+    // }
+
+    render() {
+        const { data } = this.state;
+        const employees = this.state.data.length;
+        const increased = this.state.data.filter(item => item.increase).length;
+
+        return (
+            <div className="app">
+                <AppInfo
+                    // data={data}
+                    employees={employees}
+                    increased={increased} />
+
+                <div className="search-panel">
+                    <SearchPanel />
+                    <AppFilter />
+                </div>
+
+                <EmployeesList
+                    data={data}
+                    onDelete={this.deleteItem}
+                    onToggleProp={this.onToggleProp} />
+                <EmployeesAddForm
+                    onAdd={this.addItem} />
             </div>
-
-            <EmployeesList />
-            <EmployeesAddForm />
-        </div>
-    );
+        )
+    }
 }
 
 export default App;
