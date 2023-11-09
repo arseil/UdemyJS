@@ -1,4 +1,4 @@
-import { Component, StrictMode } from 'react';
+// import { Component, StrictMode } from 'react';
 import './App.css';
 
 // const Header = () => {
@@ -92,7 +92,21 @@ import './App.css';
 // export default App;
 
 // lesson132
-import WhoAmI from './132. Events in React/lesson132'
+// import WhoAmI from './132. Events in React/lesson132'
+
+// function App() {
+// 	return (
+// 		<div className="App">
+// 			<WhoAmI name='John' surname='Smith' link='facebook.com' />
+// 			<WhoAmI name='Alex' surname='Shepard' link='vk.com' />
+// 		</div>
+// 	);
+// }
+
+// export default App;
+
+// lesson137
+import WhoAmI from './137. React fragment/lesson137'
 
 function App() {
 	return (
