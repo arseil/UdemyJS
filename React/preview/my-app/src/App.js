@@ -1,4 +1,5 @@
 // import { Component, StrictMode } from 'react';
+import styled from 'styled-components';
 import './App.css';
 
 // const Header = () => {
@@ -106,14 +107,73 @@ import './App.css';
 // export default App;
 
 // lesson137
-import WhoAmI from './137. React fragment/lesson137'
+// import WhoAmI from './137. React fragment/lesson137'
+
+// const Wrapper = styled.div`
+// 	background: transparent;
+// 	border-radius: 3px;
+// 	border: 2px solid #BF4F74;
+// 	color: #BF4F74;
+// 	margin: 0.5em 1em;
+// 	padding: 0.25em 1em;
+// 	text-align: center;
+// `;
+
+// function App() {
+// 	return (
+// 		<Wrapper>
+// 			<WhoAmI name='John' surname='Smith' link='facebook.com' />
+// 			<WhoAmI name='Alex' surname='Shepard' link='vk.com' />
+// 		</Wrapper>
+// 	);
+// }
+
+// export default App;
+
+// lesson143
+// import WhoAmI from './143. Styled Component/lesson143'
+
+// const Wrapper = styled.div`
+// 	background: transparent;
+// 	border-radius: 3px;
+// 	border: 2px solid #BF4F74;
+// 	color: #BF4F74;
+// 	margin: 0.5em 1em;
+// 	padding: 0.25em 1em;
+// 	text-align: center;
+// `;
+
+// function App() {
+// 	return (
+// 		<Wrapper>
+// 			<WhoAmI name='John' surname='Smith' link='facebook.com' />
+// 			<WhoAmI name='Alex' surname='Shepard' link='vk.com' />
+// 		</Wrapper>
+// 	);
+// }
+
+// export default App;
+
+
+// lesson143
+import WhoAmI from './144. React Bootstrap/lesson144'
+
+const Wrapper = styled.div`
+	background: transparent;
+	border-radius: 3px;
+	border: 2px solid #BF4F74;
+	color: #BF4F74;
+	margin: 0.5em 1em;
+	padding: 0.25em 1em;
+	text-align: center;
+`;
 
 function App() {
 	return (
-		<div className="App">
+		<Wrapper>
 			<WhoAmI name='John' surname='Smith' link='facebook.com' />
 			<WhoAmI name='Alex' surname='Shepard' link='vk.com' />
-		</div>
+		</Wrapper>
 	);
 }
 
