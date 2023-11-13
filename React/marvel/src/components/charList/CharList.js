@@ -2,6 +2,7 @@ import { Component } from 'react';
 import Spinner from '../spinner/Spinner';
 import ErrorMessage from '../errorMessage/ErrorMessage';
 import MarvelService from '../../services/MarvelService';
+import PropTypes from 'prop-types'
 
 import './charList.scss';
 
@@ -24,10 +25,11 @@ class CharList extends Component {
 
     componentWillUnmount() {
         window.removeEventListener('scroll', this.showCharsByScroll);
+        this.setState({ pageUpdateByScroll: false })
     }
 
     showCharsByScroll = () => {
-        if (window.scrollY + document.documentElement.clientHeight >= document.documentElement.scrollHeight - 1) {
+        if (window.scrollY + document.documentElement.clientHeight >= document.documentElement.scrollHeight - 1 && window.scrollY > 0) {
             this.onRequest(this.state.offset);
         }
     }
@@ -68,19 +70,45 @@ class CharList extends Component {
         })
     }
 
+    itemRefs = [];
+
+    setRef = (ref) => {
+        this.itemRefs.push(ref);
+    }
+
+
+    focusOnItem = (id) => {
+        this.itemRefs.forEach(item => item.classList.remove('char__item_selected'));
+        this.itemRefs[id].classList.add('char__item_selected');
+    }
+
     renderItems(arr) {
 
-        const items = arr.map((item) => {
+        const items = arr.map((item, i) => {
             const { name, thumbnail, id } = item;
+
             let className = "char__item_img"
+
             if (thumbnail.indexOf('image_not_available') > -1) {
                 className += ' char__item_img_notfound';
             }
+
             return (
                 <li
                     className="char__item"
                     key={id}
-                    onClick={() => this.props.onCharSelected(id)}>
+                    tabIndex={0}
+                    ref={this.setRef}
+                    onClick={() => {
+                        this.props.onCharSelected(id);
+                        this.focusOnItem(i)
+                    }}
+                    onKeyDown={(e) => {
+                        if (e.key === ' ' || e.key === "Enter") {
+                            this.props.onCharSelected(id);
+                            this.focusOnItem(i);
+                        }
+                    }}>
                     <img src={thumbnail} alt={name} className={className} />
                     <div className="char__name">{name}</div>
                 </li>
@@ -119,6 +147,10 @@ class CharList extends Component {
             </div>
         )
     }
+}
+
+CharList.propTypes = {
+    onCharSelected: PropTypes.func.isRequired
 }
 
 export default CharList;

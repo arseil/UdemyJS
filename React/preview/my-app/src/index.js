@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { Header } from './App';
-import BootstrapTest from './144. React Bootstrap/BootstrapTest.js'
 import { Button } from './143. Styled Component/lesson143';
 import styled from 'styled-components';
 
@@ -39,9 +38,5 @@ const BigButton = styled(Button)`
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <StrictMode>
-    <App />
-    <BigButton as='a' href='https://youtube.com'>Отправить отчет</BigButton>
-    <BootstrapTest />
-  </StrictMode>
+  <App />
 );
